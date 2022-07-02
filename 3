@@ -1,0 +1,76 @@
+#include <iostream>
+
+
+using namespace std;
+template <typename T, size_t size>
+class Vector2D
+{
+protected:
+    T* vec_;
+    float x;
+    float y;
+public:
+    // Конструктор
+    Vector2D(){
+        vec_ = new T[size];
+    }
+    Vector2D(int x, int y) {
+        this->x = x;
+        this->y = y;
+    }
+
+
+    // Деструктор
+    ~Vector2D(){
+        for (int i = 0; i < size; i ++){
+            delete vec_[i];
+        }
+
+    };
+
+    // Получение координат
+    int getX() const{
+        return this->x;
+    }
+    int getY() const{
+        return this->y;
+    };
+
+    // Задание координат
+    void setX(int x){
+        this->x = x;
+    }
+    void setY(int y){
+        this->y = y;
+    }
+
+    // сравнение двух векторов на равенство
+    bool operator== (const Vector2D& v2) const{
+        return x == v2.x && y == v2.y;
+    }
+
+    // неравенство векторов
+    bool operator!= (const Vector2D& v2) const{
+        return x != v2.x && y != v2.y;
+    }
+
+    // сумма двух векторов, исходные вектора не меняются, возвращается новый вектор
+    Vector2D operator+ (const Vector2D& v2) const{
+        return Vector2D (x + v2.x , y + v2.y) ;
+    }
+
+    // вычитание векторов, исходные вектора не меняются, возвращается новый вектор
+    Vector2D operator- (const Vector2D& v2) const{
+        return Vector2D (x - v2.x , y - v2.y);
+    }
+
+    // оператор умножения вектора на скаляр, исходный вектор не меняется, возвращается новый вектор
+    Vector2D operator* (const int a) const{
+        return Vector2D (a*x, a*y);
+    }
+};
+int main(){
+    cout << 2;
+}
+
+
