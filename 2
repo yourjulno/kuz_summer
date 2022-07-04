@@ -2,17 +2,22 @@
 // Created by 79096 on 02.07.2022.
 //
 #include <iostream>
-template <unsigned  int N>
+#include <ctime>
+template <unsigned  int N >
 constexpr unsigned int factorial(){
-    int F = 1;
-    for(int i = 1; i <= N; ++i)
-    {
-        F = F * i;
-    }
-    return F;
+
+    return  N * factorial<N-1>();
+}
+template<>
+constexpr unsigned int factorial<1>(){
+    return 1;
 }
 int main(){
-    std::cout << factorial<3>();
+   // auto start_time = clock();
+    std::cout << factorial<3>() << std::endl;
+   // std::cout<< clock() - start_time;
 }
+
+
 
 
