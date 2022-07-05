@@ -87,9 +87,10 @@ public:
         return vec;
     }
 
-
-    friend Vector<Type, N> operator*(Type num, const Vector<Type, N>& vec);
-    friend std::ostream operator<<(std::ostream& out,  const Vector<Type, N>& vec);
+    template <typename X, int P>
+    friend Vector<Type, N> operator*(Type num, const Vector<X, P>& vec);
+    template <typename X, int P>
+    friend std::ostream operator<<(std::ostream& out,  const Vector<X, P>& vec);
 };
 template <typename Type, int N>
 std::ostream& operator<<(std::ostream& os, const Vector<Type, N>& a1){
@@ -183,8 +184,9 @@ public:
         }
         return vec;
     }
-
-    friend Vector<Type, Dynamic> operator*(Type num, const Vector<Type, Dynamic>& vec);
+    template <typename X>
+    friend Vector<Type, Dynamic> operator*(Type num, const Vector<X, Dynamic>& vec);
+    template <typename X>
     friend std::ostream operator<<(std::ostream& out,  const Vector<Type, Dynamic>& vec);
 };
 template <typename Type>
@@ -204,6 +206,7 @@ Vector<Type, Dynamic> operator*(Type num, const Vector<Type, Dynamic>& vec){
 }
 int main(){
     Vector<int, 8> a;
+    //Vector<int, -5> a2;
    // Vector<int, 8> a1(a);
 //    for (int i = 0; i < 8; i++){
 //        cout << a1.operator[](i) << " ";
