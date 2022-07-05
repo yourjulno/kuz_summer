@@ -1,0 +1,124 @@
+//
+// Created by aleksandr on 02.07.22.
+//
+
+#include <array>
+#include <vector>
+#include <initializer_list>
+#include <cmath>
+
+template <typename Type, int N>
+class Vector {
+    static_assert(N >= 0);
+    std::array<Type, N> data_;
+
+public:
+    constexpr Vector();
+    constexpr Vector(const Vector<Type, N>& other){
+        for (int i = 0; i < N; i ++){
+            other[i] = data_[i];
+        }
+    }
+    constexpr Vector(std::initializer_list<Type>);
+
+    const Type& operator[](unsigned int i) const{
+        return this->data[i];
+    }
+    Type& operator[](unsigned int i){
+        return this->data[i];
+    }
+    Type norm() const{
+
+    }
+
+    Vector<Type, N> operator*=(Type num){
+        for (int i = 0; i < N; i ++){
+            data_[i] = data_[i] * num;
+        }
+        return *this;
+    }   
+    Vector<Type, N> operator/=(Type num){
+        for (int i = 0; i < N; i ++){
+            data_[i] = data_[i] / num;
+        }
+        return *this;
+    }
+    Vector<Type, N> operator+=(const Vector<Type, N>& other){
+        for (int i = 0; i < N; i ++){
+            data_[i] = data_[i] + other.data_[i];
+        }
+        return *this;
+    }
+    Vector<Type, N> operator-=(const Vector<Type, N>& other){
+        for (int i = 0; i < N; i ++){
+            data_[i] = data_[i] - other.data_[i];
+        }
+        return *this;
+    }
+
+    Vector<Type, N> operator*(Type num) const{
+        Vector<Type, N> vec;
+        for (int i = 0; i < N; i++){
+            vec.data_[i] = vec.data_[i] * num;
+        }
+        return vec;
+    }
+    Vector<Type, N> operator/(Type num) const{
+        Vector<Type, N> vec;
+        for (int i = 0; i < N; i++){
+            vec.data_[i] = vec.data_[i] / num;
+        }
+        return vec;
+    }
+
+    Vector<Type, N> operator+(const Vector<Type, N>& other) const{
+        Vector<Type, N> vec;
+        for (int i = 0; i < N; i++){
+            vec.data_[i] = vec.data_[i] + other.data_[i];
+        }
+        return vec;
+    }
+
+    Vector<Type, N> operator-(const Vector<Type, N>& other) const{
+        Vector<Type, N> vec;
+        for (int i = 0; i < N; i++){
+            vec.data_[i] = vec.data_[i] - other.data_[i];
+        }
+        return vec;
+    }
+
+
+    friend Vector<Type, N> operator*(Type num, const Vector<Type, N>& vec);
+    friend Vector<Type, N> operator/(Type num, const Vector<Type, N>& vec);
+    friend std::ostream operator<<(std::ostream& out,  const Vector<Type, N>& vec);
+};
+
+constexpr int Dynamic = -1;
+
+template <typename Type>
+class Vector<Type, Dynamic> {
+    std::vector<Type> data_;
+    int size_;
+
+public:
+    constexpr Vector();
+    constexpr Vector(const Vector<Type, Dynamic>& other);
+    constexpr Vector(std::initializer_list<Type>);
+
+    const Type& operator[](unsigned int i) const; //вернуть этот же элемент
+    Type& operator[](unsigned int i);
+    Type norm() const;
+
+    Vector<Type, Dynamic> operator*=(Type num);
+    Vector<Type, Dynamic> operator/=(Type num);
+    Vector<Type, Dynamic> operator+=(const Vector<Type, Dynamic>& other);
+    Vector<Type, Dynamic> operator-=(const Vector<Type, Dynamic>& other);
+
+    Vector<Type, Dynamic> operator*(Type num) const;
+    Vector<Type, Dynamic> operator/(Type num) const;
+    Vector<Type, Dynamic> operator+(const Vector<Type, Dynamic>& other) const;
+    Vector<Type, Dynamic> operator-(const Vector<Type, Dynamic>& other) const;
+
+    friend Vector<Type, Dynamic> operator*(Type num, const Vector<Type, Dynamic>& vec);
+    friend std::ostream operator<<(std::ostream& out,  const Vector<Type, Dynamic>& vec);
+};
